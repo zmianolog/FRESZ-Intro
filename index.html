@@ -1,0 +1,390 @@
+<!doctype html> 
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <title>FRESZ Intro — Test dojrzałości systemu motywacyjnego</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #1A2C40;     /* granat */
+      --panel: #22364b;  /* ciemniejszy panel */
+      --card: #203246;   /* karty */
+      --muted: #b6c2cf;  /* tekst wtórny */
+      --text: #f5f7fa;   /* główny tekst */
+      --brand: #F33D25;  /* czerwony akcent */
+      --border: #314656; /* krawędzie */
+      --ok: #22c55e;     /* zielony */
+      --warn: #facc15;   /* żółty */
+      --low: #f87171;    /* niski poziom */
+      --mid: #fbbf24;    /* średni poziom */
+      --high: #4ade80;   /* wysoki poziom */
+    }
+    * { box-sizing: border-box }
+    html, body { height: 100% }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Aptos", "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.55;
+    }
+    header { padding: 28px 16px 8px; text-align: center }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(22px, 2.6vw, 32px);
+      font-weight: 800; letter-spacing: .2px;
+      color: var(--brand);
+    }
+    header p { margin: 0; color: var(--muted); font-size: 14px }
+    .container { max-width: 980px; margin: 24px auto 56px; padding: 0 16px }
+    .legend { display: flex; gap: 12px; flex-wrap: wrap; margin: 6px 0 18px; color: var(--muted); font-size: 13px }
+    .badge { padding: 4px 8px; border: 1px solid var(--border); border-radius: 999px; background: rgba(255,255,255,0.04) }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 18px 10px;
+      margin-bottom: 16px;
+    }
+    fieldset { border: none; margin: 0; padding: 0 }
+    legend { font-weight: 700; margin-bottom: 8px; letter-spacing: .2px; font-size: 16px; color: var(--brand) }
+    .q {
+      padding: 12px; border-radius: 12px; border: 1px solid var(--border);
+      background: var(--panel); margin-bottom: 10px
+    }
+    .q p { margin: 0 0 10px; font-weight: 600 }
+    .scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px }
+    input[type="radio"] { display: none }
+    .opt {
+      display: grid; place-items: center; gap: 4px; padding: 8px 6px; border-radius: 10px; cursor: pointer;
+      border: 1px solid var(--border); background: rgba(255,255,255,0.04);
+      color: var(--muted); font-size: 12px; transition: all .15s ease;
+    }
+    .opt:hover { border-color: var(--brand); color: var(--text) }
+    input[type="radio"]:checked + .opt { outline: 2px solid var(--brand); color: #fff; background: rgba(243,61,37,.22) }
+
+    .toolbar {
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin: 16px 0 6px;
+    }
+    button {
+      padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border);
+      background: #172433; color: var(--text); cursor: pointer; font-weight: 700; letter-spacing: .2px;
+      transition: transform .08s ease, background .15s ease;
+    }
+    button:hover { background: #1f2f42 }
+    button:active { transform: translateY(1px) }
+    .btn-primary { background: var(--brand); color: #fff; border-color: transparent }
+    .btn-primary:hover { filter: brightness(1.08) }
+    .btn-ghost { background: transparent }
+
+    .progress {
+      width: 100%; height: 10px; background: #142131; border-radius: 999px; border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .bar { height: 100%; width: 0%; background: var(--brand); transition: width .25s ease }
+
+    .result {
+      padding: 16px; border-radius: 14px; border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05); margin-top: 8px
+    }
+    .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px }
+    @media (max-width: 760px) { .grid2 { grid-template-columns: 1fr } }
+    .pill { display: inline-block; padding: 4px 10px; border-radius: 999px; font-weight: 800; letter-spacing: .3px; margin-right: 8px }
+    .lvl-low  { background: var(--low); color: #fff }
+    .lvl-mid  { background: var(--mid); color: #1a1a1a }
+    .lvl-high { background: var(--high); color: #06230f }
+    .muted { color: var(--muted) }
+    footer { text-align: center; color: var(--muted); font-size: 12px; padding: 24px 12px 40px }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>FRESZ Intro — Test dojrzałości systemu motywacyjnego</h1>
+    <p>Oceń każde stwierdzenie w skali 1–5: 1 = zdecydowanie nie, 5 = zdecydowanie tak.</p>
+  </header>
+
+  <div class="container">
+    <div class="legend">
+      <span class="badge">Blok A — Smary (H): fundament</span>
+      <span class="badge">Blok B — Paliwa (P): energia</span>
+      <span class="badge">Blok C — Spójność ze strategią</span>
+      <span class="badge">Blok D — System (pomiar i rytm)</span>
+    </div>
+
+    <form id="form">
+      <!-- BLOK A: Smary -->
+      <section class="card">
+        <legend>Blok A — Smary (H): fundament</legend>
+
+        <div class="q" data-q="1">
+          <p>1. Narzędzia i środowisko pracy są stabilne i nie przerywają pracy zespołów.</p>
+          <div class="scale">
+            <label><input type="radio" name="q1" value="1"><div class="opt">1</div></label>
+            <label><input type="radio" name="q1" value="2"><div class="opt">2</div></label>
+            <label><input type="radio" name="q1" value="3"><div class="opt">3</div></label>
+            <label><input type="radio" name="q1" value="4"><div class="opt">4</div></label>
+            <label><input type="radio" name="q1" value="5"><div class="opt">5</div></label>
+          </div>
+        </div>
+
+        <div class="q" data-q="2">
+          <p>2. Role, odpowiedzialności i standardy pracy są jasne i aktualne.</p>
+          <div class="scale">
+            <label><input type="radio" name="q2" value="1"><div class="opt">1</div></label>
+            <label><input type="radio" name="q2" value="2"><div class="opt">2</div></label>
+            <label><input type="radio" name="q2" value="3"><div class="opt">3</div></label>
+            <label><input type="radio" name="q2" value="4"><div class="opt">4</div></label>
+            <label><input type="radio" name="q2" value="5"><div class="opt">5</div></label>
+          </div>
+        </div>
+
+        <div class="q" data-q="3">
+          <p>3. Cele i priorytety operacyjne są zrozumiałe dla pracowników.</p>
+          <div class="scale">
+            <label><input type="radio" name="q3" value="1"><div class="opt">1</div></label>
+            <label><input type="radio" name="q3" value="2"><div class="opt">2</div></label>
+            <label><input type="radio" name="q3" value="3"><div class="opt">3</div></label>
+            <label><input type="radio" name="q3" value="4"><div class="opt">4</div></label>
+            <label><input type="radio" name="q3" value="5"><div class="opt">5</div></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- BLOK B: Paliwa -->
+      <section class="card">
+        <legend>Blok B — Paliwa (P): energia</legend>
+
+        <div class="q" data-q="4">
+          <p>4. Pracownicy mają realną autonomię w decyzjach potrzebnych do pracy.</p>
+          <div class="scale">
+            <label><input type="radio" name="q4" value="1"><div class="opt">1</div></label>
+            <label><input type="radio" name="q4" value="2"><div class="opt">2</div></label>
+            <label><input type="radio" name="q4" value="3"><div class="opt">3</div></label>
+            <label><input type="radio" name="q4" value="4"><div class="opt">4</div></label>
+            <label><input type="radio" name="q4" value="5"><div class="opt">5</div></label>
+          </div>
+        </div>
+
+        <div class="q" data-q="5">
+          <p>5. Uczenie się i dzielenie wiedzą są rutyną zespołów (nie tylko ad hoc).</p>
+          <div class="scale">
+            <label><input type="radio" name="q5" value="1"><div class="opt">1</div></label>
+            <label><input type="radio" name="q5" value="2"><div class="opt">2</div></label>
+            <label><input type="radio" name="q5" value="3"><div class="opt">3</div></label>
+            <label><input type="radio" name="q5" value="4"><div class="opt">4</div></label>
+            <label><input type="radio" name="q5" value="5"><div class="opt">5</div></label>
+          </div>
+        </div>
+
+        <div class="q" data-q="6">
+          <p>6. Uznanie i feedback są obecne na co dzień i wspierają osiąganie celów.</p>
+          <div class="scale">
+            <label><input type="radio" name="q6" value="1"><div class="opt">1</div></label>
+            <label><input type="radio" name="q6" value="2"><div class="opt">2</div></label>
+            <label><input type="radio" name="q6" value="3"><div class="opt">3</div></label>
+            <label><input type="radio" name="q6" value="4"><div class="opt">4</div></label>
+            <label><input type="radio" name="q6" value="5"><div class="opt">5</div></label>
+          </div>
+        </div>
+
+        <div class="q" data-q="7">
+          <p>7. Pracownicy widzą sens pracy i czują energię do realizacji celów firmy.</p>
+          <div class="scale">
+            <label><input type="radio" name="q7" value="1"><div class="opt">1</div></label>
+            <label><input type="radio" name="q7" value="2"><div class="opt">2</div></label>
+            <label><input type="radio" name="q7" value="3"><div class="opt">3</div></label>
+            <label><input type="radio" name="q7" value="4"><div class="opt">4</div></label>
+            <label><input type="radio" name="q7" value="5"><div class="opt">5</div></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- BLOK C: Spójność ze strategią -->
+      <section class="card">
+        <legend>Blok C — Spójność ze strategią</legend>
+
+        <div class="q" data-q="8">
+          <p>8. Potrafimy pokazać, jak praca zespołów wspiera cele strategiczne firmy.</p>
+          <div class="scale">
+            <label><input type="radio" name="q8" value="1"><div class="opt">1</div></label>
+            <label><input type="radio" name="q8" value="2"><div class="opt">2</div></label>
+            <label><input type="radio" name="q8" value="3"><div class="opt">3</div></label>
+            <label><input type="radio" name="q8" value="4"><div class="opt">4</div></label>
+            <label><input type="radio" name="q8" value="5"><div class="opt">5</div></label>
+          </div>
+        </div>
+
+        <div class="q" data-q="9">
+          <p>9. Decyzje i działania liderów są spójne z priorytetami firmy.</p>
+          <div class="scale">
+            <label><input type="radio" name="q9" value="1"><div class="opt">1</div></label>
+            <label><input type="radio" name="q9" value="2"><div class="opt">2</div></label>
+            <label><input type="radio" name="q9" value="3"><div class="opt">3</div></label>
+            <label><input type="radio" name="q9" value="4"><div class="opt">4</div></label>
+            <label><input type="radio" name="q9" value="5"><div class="opt">5</div></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- BLOK D: System -->
+      <section class="card">
+        <legend>Blok D — System (pomiar i rytm)</legend>
+
+        <div class="q" data-q="10">
+          <p>10. Regularnie mierzymy poziom motywacji i reagujemy na sygnały (3E + progi).</p>
+          <div class="scale">
+            <label><input type="radio" name="q10" value="1"><div class="opt">1</div></label>
+            <label><input type="radio" name="q10" value="2"><div class="opt">2</div></label>
+            <label><input type="radio" name="q10" value="3"><div class="opt">3</div></label>
+            <label><input type="radio" name="q10" value="4"><div class="opt">4</div></label>
+            <label><input type="radio" name="q10" value="5"><div class="opt">5</div></label>
+          </div>
+        </div>
+
+        <div class="q" data-q="11">
+          <p>11. Znamy kluczowe motywatory dla naszych zespołów (wg typu pracy / SYNVARIA).</p>
+          <div class="scale">
+            <label><input type="radio" name="q11" value="1"><div class="opt">1</div></label>
+            <label><input type="radio" name="q11" value="2"><div class="opt">2</div></label>
+            <label><input type="radio" name="q11" value="3"><div class="opt">3</div></label>
+            <label><input type="radio" name="q11" value="4"><div class="opt">4</div></label>
+            <label><input type="radio" name="q11" value="5"><div class="opt">5</div></label>
+          </div>
+        </div>
+
+        <div class="q" data-q="12">
+          <p>12. Posiadamy rytm przeglądów i decyzji (mies./kw./rocznie) dotyczących motywatorów.</p>
+          <div class="scale">
+            <label><input type="radio" name="q12" value="1"><div class="opt">1</div></label>
+            <label><input type="radio" name="q12" value="2"><div class="opt">2</div></label>
+            <label><input type="radio" name="q12" value="3"><div class="opt">3</div></label>
+            <label><input type="radio" name="q12" value="4"><div class="opt">4</div></label>
+            <label><input type="radio" name="q12" value="5"><div class="opt">5</div></label>
+          </div>
+        </div>
+      </section>
+
+      <div class="toolbar">
+        <button type="button" class="btn-ghost" id="reset">Wyczyść</button>
+        <div style="display:flex; gap:10px; align-items:center">
+          <div style="min-width:200px">
+            <div class="progress" aria-label="Postęp odpowiedzi"><div class="bar" id="bar"></div></div>
+            <div class="muted" style="font-size:12px;margin-top:6px"><span id="answered">0</span>/12 odpowiedzi</div>
+          </div>
+          <button type="button" class="btn-primary" id="calc">Oblicz wynik</button>
+        </div>
+      </div>
+    </form>
+
+    <section id="out" class="result" style="display:none">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span id="levelPill" class="pill lvl-mid">POZIOM</span>
+        <div><strong>Wynik łączny:</strong> <span id="score">—</span> / 60</div>
+      </div>
+      <div class="grid2" style="margin-top:12px">
+        <div>
+          <p style="margin:.2rem 0 .4rem">Interpretacja:</p>
+          <ul id="interp" style="margin:.2rem 0 .6rem 1rem; padding-left:.8rem"></ul>
+        </div>
+        <div>
+          <p style="margin:.2rem 0 .4rem">Sugerowane priorytety:</p>
+          <ul id="hints" style="margin:.2rem 0 .6rem 1rem; padding-left:.8rem"></ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      FRESZ Intro — ocena dojrzałości systemu motywacyjnego (12–60 pkt).
+    </footer>
+  </div>
+
+  <script>
+    (function(){
+      const TOTAL = 12;
+      const qs = [...document.querySelectorAll('.q')];
+      const answeredEl = document.getElementById('answered');
+      const barEl = document.getElementById('bar');
+      const out = document.getElementById('out');
+      const scoreEl = document.getElementById('score');
+      const levelPill = document.getElementById('levelPill');
+      const interpEl = document.getElementById('interp');
+      const hintsEl = document.getElementById('hints');
+
+      function countAnswered(){
+        const c = qs.filter(q => q.querySelector('input[type=radio]:checked')).length;
+        answeredEl.textContent = c;
+        barEl.style.width = (c / TOTAL * 100) + '%';
+      }
+      document.getElementById('form').addEventListener('change', countAnswered);
+      countAnswered();
+
+      function getBlockAvg(from,to){
+        let sum=0, n=0;
+        for(let i=from;i<=to;i++){
+          const sel = document.querySelector(`input[name="q${i}"]:checked`);
+          if(sel){ sum += +sel.value; n++; }
+        }
+        return n ? (sum/n) : 0;
+      }
+
+      function calc(){
+        const missing = qs.filter(q => !q.querySelector('input[type=radio]:checked')).length;
+        if(missing){
+          alert('Zaznacz odpowiedzi na wszystkie pytania (12).');
+          return;
+        }
+        let total = 0;
+        for(let i=1;i<=TOTAL;i++){
+          total += +document.querySelector(`input[name="q${i}"]:checked`).value;
+        }
+        scoreEl.textContent = total.toString();
+
+        let pillClass='lvl-mid', levelText='';
+        if(total <= 24){ levelText='NISKA DOJRZAŁOŚĆ'; pillClass='lvl-low'; }
+        else if(total <= 40){ levelText='ŚREDNIA DOJRZAŁOŚĆ'; pillClass='lvl-mid'; }
+        else { levelText='WYSOKA DOJRZAŁOŚĆ'; pillClass='lvl-high'; }
+        levelPill.textContent = levelText;
+        levelPill.className = 'pill ' + pillClass;
+
+        interpEl.innerHTML = '';
+        const li = (t)=>{ const el=document.createElement('li'); el.textContent=t; interpEl.appendChild(el); };
+        if(total <= 24){
+          li('System jest fragmentaryczny. Priorytet: smary (narzędzia, role, standardy).');
+          li('Najpierw osiągnij próg higieny, dopiero potem inwestuj w paliwa.');
+        } else if(total <= 40){
+          li('Elementy systemu działają nierówno między zespołami.');
+          li('Wyrównaj higienę i ustaw prosty rytm przeglądów (kwartalnie).');
+        } else {
+          li('System działa: balans smarów i paliw oraz spójność ze strategią.');
+          li('Wzmacniaj pomiar 3E + progi oraz adaptację działań.');
+        }
+
+        hintsEl.innerHTML = '';
+        const avgA = getBlockAvg(1,3), avgB = getBlockAvg(4,7), avgC = getBlockAvg(8,9), avgD = getBlockAvg(10,12);
+        const tuples = [
+          ['Smary (H)', avgA, 'Zapewnij uptime narzędzi, jasne role i zwinny standard pracy.'],
+          ['Paliwa (P)', avgB, 'Wzmocnij autonomię, knowledge sharing, uznanie i sens.'],
+          ['Spójność strategii', avgC, 'Łącz cele zespołów z priorytetami firmy i decyzjami liderów.'],
+          ['System (pomiar/rytm)', avgD, 'Wdroż 3E+progi i kwartalne przeglądy z decyzjami.'],
+        ];
+        tuples.sort((a,b)=>a[1]-b[1]);
+        for(const [name,avg,tip] of tuples){
+          const el=document.createElement('li');
+          el.innerHTML = `<strong>${name}:</strong> śr. ${avg.toFixed(1)} — ${tip}`;
+          hintsEl.appendChild(el);
+        }
+
+        out.style.display = 'block';
+        out.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+
+      document.getElementById('calc').addEventListener('click', calc);
+      document.getElementById('reset').addEventListener('click', ()=>{
+        document.getElementById('form').reset();
+        countAnswered();
+        out.style.display = 'none';
+      });
+    })();
+  </script>
+</body>
+</html>
